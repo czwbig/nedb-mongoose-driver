@@ -139,8 +139,7 @@ describe('model: update:', () => {
         $set: { date: new Date() },
         published: false, // becomes $set
         mixed: { x: 'ECKS', y: 'why' }, // $set
-        // FIXME: $pullAll is not supported
-        // $pullAll: { numbers: [4, 6] },
+        $pullAll: { numbers: [4, 6] },
         $pull: { owners: id0 },
         'comments.1.body': 8, // $set
       };
@@ -157,7 +156,7 @@ describe('model: update:', () => {
           assert.equal(up.published, false);
           assert.equal(up.mixed.x, 'ECKS');
           assert.equal(up.mixed.y, 'why');
-          // assert.deepEqual(up.numbers.toObject(), [4, 5, 6, 7]);
+          assert.deepEqual(up.numbers.toObject(), [5, 7]);
           assert.equal(up.owners.length, 1);
           assert.equal(up.owners[0].toString(), id1.toString());
           assert.equal(up.comments[0].body, 'been there');
@@ -204,7 +203,7 @@ describe('model: update:', () => {
                     assert.equal(up.published, false);
                     assert.equal(up.mixed.x, 'ECKS');
                     assert.equal(up.mixed.y, 'why');
-                    // assert.deepEqual(up.numbers.toObject(), [5, 7]);
+                    assert.deepEqual(up.numbers.toObject(), [5, 7]);
                     assert.equal(up.owners.length, 1);
                     assert.equal(up.owners[0].toString(), id1.toString());
                     assert.equal(up.comments[0].body, 'fail');
@@ -248,7 +247,7 @@ describe('model: update:', () => {
         assert.strictEqual(true, !!doc.comments[0]._id);
         assert.equal(up.meta.visitors.valueOf(), 2);
         assert.equal(up.mixed.x, 'ECKS');
-        assert.deepEqual(up.numbers.toObject(), [4, 100, 6, 7]);
+        assert.deepEqual(up.numbers.toObject(), [5, 100]);
         assert.strictEqual(up.numbers[1].valueOf(), 100);
 
         assert.equal(doc.idontexist, 2);
@@ -259,8 +258,7 @@ describe('model: update:', () => {
     });
   });
 
-  // FIXME: $pullAll is not supported
-  it.skip('handles $pushAll array of docs', (done) => {
+  it('handles $pushAll array of docs', (done) => {
     const BlogPost = db.model('BlogPostForUpdates', collection);
 
     const update = {
@@ -285,11 +283,7 @@ describe('model: update:', () => {
 
   it('handles $pull of object literal array of docs (gh-542)', (done) => {
     const BlogPost = db.model('BlogPostForUpdates', collection);
-
-    // FIXME: if previous test passed, remove the first update
-    let update = { $push: { comments: { $each: [{ body: 'i am number 2' }, { body: 'i am number 3' }] } } };
-    BlogPost.update({ _id: post._id }, update, () => {
-      update = { $pull: { comments: { body: 'i am number 2' } } };
+      let update = { $pull: { comments: { body: 'i am number 2' } } };
       BlogPost.update({ _id: post._id }, update, (err) => {
         assert.ifError(err);
         BlogPost.findById(post, (err, ret) => {
@@ -302,7 +296,6 @@ describe('model: update:', () => {
           done();
         });
       });
-    });
   });
 
   it('makes copy of conditions and update options', (done) => {
@@ -317,8 +310,7 @@ describe('model: update:', () => {
     });
   });
 
-  // FIXME: this kind of casting is not supported
-  it.skip('handles weird casting (gh-479)', (done) => {
+  it('handles weird casting (gh-479)', (done) => {
     const BlogPost = db.model('BlogPostForUpdates', collection);
 
     function a() {}
@@ -362,7 +354,7 @@ describe('model: update:', () => {
       $set: { date: new Date().getTime() }, // check for single val casting
     };
 
-    BlogPost.update({ _id: post._id, 'comments.body': 'worked great' }, update, (err) => {
+    BlogPost.update({ _id: post._id }, update, (err) => {
       assert.ifError(err);
       BlogPost.findById(post, (err, ret) => {
         assert.ifError(err);
@@ -2466,7 +2458,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('$pull with updateValidators (gh-5555)', (done) => {
+    it('$pull with updateValidators (gh-5555)', (done) => {
       const notificationSchema = new mongoose.Schema({
         message: {
           type: String,
@@ -2586,7 +2578,7 @@ describe('model: update:', () => {
       }
     });
 
-    it.skip('strict false in query (gh-5453)', (done) => {
+    it('strict false in query (gh-5453)', (done) => {
       const schema = new mongoose.Schema(
         {
           date: { type: Date, required: true },
@@ -2605,7 +2597,7 @@ describe('model: update:', () => {
         .catch(done);
     });
 
-    it.skip('returns error if passing array as conditions (gh-3677)', (done) => {
+    it('returns error if passing array as conditions (gh-3677)', (done) => {
       const schema = new mongoose.Schema({
         name: String,
       });
@@ -2620,7 +2612,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('upsert: 1 (gh-5839)', (done) => {
+    it('upsert: 1 (gh-5839)', (done) => {
       const schema = new mongoose.Schema({
         name: String,
       });
@@ -2676,8 +2668,7 @@ describe('model: update:', () => {
       });
     });
 
-    // FIXME: updateOne, updateMany
-    it.skip('cast error in update conditions (gh-5477)', (done) => {
+    it('cast error in update conditions (gh-5477)', (done) => {
       const schema = new mongoose.Schema(
         {
           name: String,

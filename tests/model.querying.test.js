@@ -212,7 +212,7 @@ describe('model: querying:', () => {
             assert.equal(count, 2);
 
             done();
-          });
+          }).exec();
         });
       });
     });
@@ -326,8 +326,7 @@ describe('model: querying:', () => {
       });
     });
 
-    // FIXME:
-    it.skip('querying if an array contains one of multiple members $in a set', (done) => {
+    it('querying if an array contains one of multiple members $in a set', (done) => {
       const BlogPostB = db.model('BlogPostB', collection);
 
       const post = new BlogPostB();
@@ -350,8 +349,7 @@ describe('model: querying:', () => {
       });
     });
 
-    // FIXME:
-    it.skip('querying if an array contains one of multiple members $in a set 2', (done) => {
+    it('querying if an array contains one of multiple members $in a set 2', (done) => {
       const BlogPostA = db.model('BlogPostB', collection);
 
       const post = new BlogPostA({ tags: ['gooberOne'] });
@@ -372,7 +370,7 @@ describe('model: querying:', () => {
       post.collection.insert({ meta: { visitors: 9898, a: null } }, {}, (err, b) => {
         assert.ifError(err);
 
-        BlogPostA.findOne({ _id: b.ops[0]._id }, (err, found) => {
+        BlogPostA.findOne({ _id: b._id }, (err, found) => {
           cb();
           assert.ifError(err);
           assert.equal(found.get('meta.visitors'), 9898);
@@ -389,8 +387,7 @@ describe('model: querying:', () => {
       }
     });
 
-    // FIXME:
-    it.skip('querying via $where a string', (done) => {
+    it('querying via $where a string', (done) => {
       const BlogPostB = db.model('BlogPostB', collection);
 
       BlogPostB.create({ title: 'Steve Jobs', author: 'Steve Jobs' }, (err, created) => {
@@ -405,8 +402,7 @@ describe('model: querying:', () => {
       });
     });
 
-    // FIXME:
-    it.skip('querying via $where a function', (done) => {
+    it('querying via $where a function', (done) => {
       const BlogPostB = db.model('BlogPostB', collection);
 
       BlogPostB.create({ author: 'Atari', slug: 'Atari' }, (err, created) => {
@@ -852,7 +848,7 @@ describe('model: querying:', () => {
     });
 
     // FIXME: broken
-    it.skip('works when comparing $ne with single value against an array', (done) => {
+    it('works when comparing $ne with single value against an array', (done) => {
       const schema = new Schema({
         ids: [Schema.ObjectId],
         b: Schema.ObjectId,
@@ -1126,8 +1122,9 @@ describe('model: querying:', () => {
               assert.ifError(err);
 
               assert.equal(found.length, 2);
-              assert.equal(found[0]._id.toString(), two._id);
-              assert.equal(found[1]._id.toString(), three._id);
+              let foundIds = found.map(e=>e._id.toString())
+              assert.ok(foundIds.includes(two._id.toString()));
+              assert.ok(foundIds.includes(three._id.toString()));
               done();
             });
           });
@@ -1466,15 +1463,16 @@ describe('model: querying:', () => {
           assert.ifError(err);
           BlogPostB.create({ title: 'third limit' }, (err) => {
             assert.ifError(err);
-            BlogPostB.find({ title: /limit$/ })
-              .limit(2)
-              .find((err, found) => {
-                assert.ifError(err);
-                assert.equal(found.length, 2);
-                assert.equal(found[0].id, first.id);
-                assert.equal(found[1].id, second.id);
-                done();
-              });
+              BlogPostB.find({ title: /limit$/ })
+                       .sort({ _id: 1 })
+                       .limit(2)
+                       .find((err, found) => {
+                           assert.ifError(err);
+                           assert.equal(found.length, 2);
+                           assert.equal(found[0].id, first.id);
+                           assert.equal(found[1].id, second.id);
+                           done();
+                       });
           });
         });
       });
@@ -1993,7 +1991,7 @@ describe('model: querying:', () => {
       });
     });
 
-    it.skip('properly casts nested and/or queries (gh-676)', (done) => {
+    it('properly casts nested and/or queries (gh-676)', (done) => {
       const sch = new Schema({
         num: Number,
         subdoc: { title: String, num: Number },
@@ -2013,7 +2011,7 @@ describe('model: querying:', () => {
       done();
     });
 
-    it.skip('properly casts deeply nested and/or queries (gh-676)', (done) => {
+    it('properly casts deeply nested and/or queries (gh-676)', (done) => {
       const sch = new Schema({
         num: Number,
         subdoc: { title: String, num: Number },

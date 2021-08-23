@@ -50,6 +50,24 @@ describe('model', () => {
       });
     });
 
+    it('insertMany: accepts an array and returns an array', (done) => {
+      B.insertMany([{ title: 'hi' }, { title: 'bye' }], (err, posts) => {
+        assert.ifError(err);
+
+        assert.ok(posts instanceof Array);
+        assert.equal(posts.length, 2);
+        const post1 = posts[0];
+        const post2 = posts[1];
+        assert.ok(post1.get('_id') instanceof DocumentObjectId);
+        assert.equal(post1.title, 'hi');
+
+        assert.ok(post2.get('_id') instanceof DocumentObjectId);
+        assert.equal(post2.title, 'bye');
+
+        done();
+      });
+    });
+
     it('fires callback when passed 0 docs', (done) => {
       B.create((err, a) => {
         assert.ifError(err);
@@ -191,8 +209,7 @@ describe('model', () => {
         }, done).end();
       });
 
-      // FIXME: broken
-      it.skip('if callback is falsy, will ignore it (gh-5061)', (done) => {
+      it('if callback is falsy, will ignore it (gh-5061)', (done) => {
         B.create({ title: 'test' }, null)
           .then((doc) => {
             assert.equal(doc.title, 'test');

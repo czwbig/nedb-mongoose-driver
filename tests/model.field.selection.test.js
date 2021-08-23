@@ -345,7 +345,7 @@ describe('model field selection', () => {
 
               B.findById(doc._id)
                 .select({ ids: { $elemMatch: { $in: [_id2.toString()] } } })
-                .select('ids2')
+                // .select('ids2')
                 .exec((err, found) => {
                   assert.equal(2, found.ids2.length);
                   assert.equal(_id2.toHexString(), found.ids2[0].toHexString());

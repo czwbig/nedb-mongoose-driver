@@ -2,7 +2,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable prefer-rest-params */
 /* eslint-disable func-names */
-require('@nedb/mongoose-driver').install();
+require('../index').install();
 
 Error.stackTraceLimit = 10;
 
