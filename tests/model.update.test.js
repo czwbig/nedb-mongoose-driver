@@ -504,8 +504,7 @@ describe('model: update:', () => {
     });
   });
 
-  // FIXME: $pullAll is not supported
-  it.skip('handles $pull and nested $nin', (done) => {
+  it('handles $pull and nested $nin', (done) => {
     const BlogPost = db.model('BlogPostForUpdates', collection);
 
     BlogPost.findById(post, (err, last) => {
@@ -605,8 +604,7 @@ describe('model: update:', () => {
     });
   });
 
-  // FIXME: compatibility
-  it.skip('passes number of affected docs', (done) => {
+  it('passes number of affected docs', (done) => {
     const B = db.model('BlogPostForUpdates', `wwwwowowo${random()}`);
 
     B.create({ title: 'one' }, { title: 'two' }, { title: 'three' }, (err) => {
@@ -712,8 +710,7 @@ describe('model: update:', () => {
     });
   });
 
-  // FIXME:
-  it.skip('handles positional operators with referenced docs (gh-1572)', (done) => {
+  it('handles positional operators with referenced docs (gh-1572)', (done) => {
     const so = new Schema({ title: String, obj: [String] });
     const Some = db.model(`Some${random()}`, so);
 
@@ -866,7 +863,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('avoids nested paths if setting parent path (gh-4911)', (done) => {
+    it('avoids nested paths if setting parent path (gh-4911)', (done) => {
       const EmbeddedSchema = mongoose.Schema({
         embeddedField: String,
       });
@@ -1218,7 +1215,7 @@ describe('model: update:', () => {
         });
       });
 
-      it.skip('handles document array validation (gh-2733)', (done) => {
+      it('handles document array validation (gh-2733)', (done) => {
         const member = new Schema({
           name: String,
           role: { type: String, required: true, enum: ['singer', 'guitar', 'drums', 'bass'] },
@@ -1237,7 +1234,7 @@ describe('model: update:', () => {
         });
       });
 
-      it.skip('validators on arrays (gh-3724)', (done) => {
+      it('validators on arrays (gh-3724)', (done) => {
         const schema = new Schema({
           arr: [String],
         });
@@ -1352,7 +1349,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('allows objects with positional operator (gh-3185)', (done) => {
+    it('allows objects with positional operator (gh-3185)', (done) => {
       const schema = new Schema({ children: [{ _id: Number }] });
       const MyModel = db.model('gh3185', schema, 'gh3185');
 
@@ -1409,7 +1406,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('mixed nested type casting (gh-3337)', (done) => {
+    it('mixed nested type casting (gh-3337)', (done) => {
       const Schema = mongoose.Schema({ attributes: {} }, { strict: true });
       const Model = db.model('gh3337', Schema);
 
@@ -1529,7 +1526,7 @@ describe('model: update:', () => {
       done();
     });
 
-    it.skip('nested schemas with strict false (gh-3883)', (done) => {
+    it('nested schemas with strict false (gh-3883)', (done) => {
       const OrderSchema = new mongoose.Schema({}, { strict: false, _id: false });
 
       const SeasonSchema = new mongoose.Schema(
@@ -1656,7 +1653,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('versioning with setDefaultsOnInsert (gh-2593)', (done) => {
+    it('versioning with setDefaultsOnInsert (gh-2593)', (done) => {
       const schema = new Schema({
         num: Number,
         arr: [{ num: Number }],
@@ -1676,7 +1673,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('updates with timestamps with $set (gh-4989)', (done) => {
+    it('updates with timestamps with $set (gh-4989)', (done) => {
       const TagSchema = new Schema(
         {
           name: String,
@@ -1771,7 +1768,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('updates child schema timestamps with $push (gh-4049)', (done) => {
+    it('updates child schema timestamps with $push (gh-4049)', (done) => {
       const opts = {
         timestamps: true,
         toObject: {
@@ -1814,7 +1811,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('updates child schema timestamps with $set (gh-4049)', (done) => {
+    it('updates child schema timestamps with $set (gh-4049)', (done) => {
       const opts = {
         timestamps: true,
         toObject: {
@@ -1888,7 +1885,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('push with timestamps (gh-4514)', (done) => {
+    it('push with timestamps (gh-4514)', (done) => {
       const sampleSchema = new mongoose.Schema(
         {
           sampleArray: [
@@ -1921,7 +1918,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('addToSet (gh-4953)', (done) => {
+    it('addToSet (gh-4953)', (done) => {
       const childSchema = new mongoose.Schema({
         name: {
           type: String,
@@ -1950,7 +1947,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('overwrite with timestamps (gh-4054)', (done) => {
+    it('overwrite with timestamps (gh-4054)', (done) => {
       const testSchema = new Schema(
         {
           user: String,
@@ -1977,7 +1974,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('update with buffer and exec (gh-4609)', (done) => {
+    it('update with buffer and exec (gh-4609)', (done) => {
       const arrSchema = new Schema({
         ip: mongoose.SchemaTypes.Buffer,
       });
@@ -2020,7 +2017,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('single nested under doc array with runValidators (gh-4960)', (done) => {
+    it('single nested under doc array with runValidators (gh-4960)', (done) => {
       const ProductSchema = new Schema({
         name: String,
       });
@@ -2078,7 +2075,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('runs validation on Mixed properties of embedded arrays during updates (gh-4441)', (done) => {
+    it('runs validation on Mixed properties of embedded arrays during updates (gh-4441)', (done) => {
       const A = new Schema({ str: {} });
       let validateCalls = 0;
       A.path('str').validate((val, next) => {
@@ -2137,7 +2134,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('with overwrite and upsert (gh-4749) (gh-5631)', (done) => {
+    it('with overwrite and upsert (gh-4749) (gh-5631)', (done) => {
       const schema = new Schema({
         name: String,
         meta: { age: { type: Number } },
@@ -2164,7 +2161,7 @@ describe('model: update:', () => {
       done();
     });
 
-    it.skip('findOneAndUpdate with nested arrays (gh-5032)', (done) => {
+    it('findOneAndUpdate with nested arrays (gh-5032)', (done) => {
       const schema = Schema({
         name: String,
         inputs: [[String]], // Array of Arrays of Strings
@@ -2172,8 +2169,12 @@ describe('model: update:', () => {
 
       const Activity = db.model('Test', schema);
 
-      const q = { name: 'Host Discovery' };
-      const u = { inputs: [['ipRange']] };
+        const q = { name: 'Host Discovery' };
+        const u = {
+            $set: {
+                inputs: [['ipRange']]
+            }
+        };
       const o = { upsert: true };
       Activity.findOneAndUpdate(q, u, o).exec((error) => {
         assert.ifError(error);
@@ -2182,7 +2183,7 @@ describe('model: update:', () => {
     });
 
     // FIXME: updateOne
-    it.skip('findOneAndUpdate with timestamps (gh-5045)', (done) => {
+    it('findOneAndUpdate with timestamps (gh-5045)', (done) => {
       const schema = new Schema(
         {
           username: String,
@@ -2206,7 +2207,7 @@ describe('model: update:', () => {
       );
     });
 
-    it.skip('doesnt double-call setters when updating an array (gh-5041)', (done) => {
+    it('doesnt double-call setters when updating an array (gh-5041)', (done) => {
       let called = 0;
       const UserSchema = new Schema({
         name: String,
@@ -2236,7 +2237,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('overwrite doc with update validators (gh-3556)', (done) => {
+    it('overwrite doc with update validators (gh-3556)', (done) => {
       const testSchema = new Schema({
         name: {
           type: String,
@@ -2257,7 +2258,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('does not fail if passing whole doc (gh-5088)', (done) => {
+    it('does not fail if passing whole doc (gh-5088)', (done) => {
       const schema = new Schema(
         {
           username: String,
@@ -2279,7 +2280,7 @@ describe('model: update:', () => {
         .catch(done);
     });
 
-    it.skip('does not fail if passing whole doc (gh-5111)', (done) => {
+    it('does not fail if passing whole doc (gh-5111)', (done) => {
       const schema = new Schema(
         {
           fieldOne: String,
@@ -2308,7 +2309,7 @@ describe('model: update:', () => {
     });
 
     // FIXME: $pullAll not supported
-    it.skip('$pullAll with null (gh-5164)', (done) => {
+    it('$pullAll with null (gh-5164)', (done) => {
       const schema = new Schema(
         {
           name: String,
@@ -2339,7 +2340,7 @@ describe('model: update:', () => {
         .catch(done);
     });
 
-    it.skip('$set array (gh-5403)', (done) => {
+    it('$set array (gh-5403)', (done) => {
       const Schema = new mongoose.Schema({
         colors: [{ type: String }],
       });
@@ -2348,7 +2349,7 @@ describe('model: update:', () => {
 
       Model.create({ colors: ['green'] })
         .then(() => Model.update({}, { $set: { colors: 'red' } }))
-        .then(() => Model.collection.findOne())
+        .then(() => Model.findOne().lean())
         .then((doc) => {
           assert.deepEqual(doc.colors, ['red']);
           done();
@@ -2356,7 +2357,7 @@ describe('model: update:', () => {
         .catch(done);
     });
 
-    it.skip('defaults with overwrite and no update validators (gh-5384)', (done) => {
+    it('defaults with overwrite and no update validators (gh-5384)', (done) => {
       const testSchema = new mongoose.Schema({
         name: String,
         something: { type: Number, default: 2 },
@@ -2380,7 +2381,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('update validators with nested required (gh-5269)', (done) => {
+    it('update validators with nested required (gh-5269)', (done) => {
       const childSchema = new mongoose.Schema(
         {
           d1: {
@@ -2408,7 +2409,7 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('with setOptions overwrite (gh-5413)', (done) => {
+    it('with setOptions overwrite (gh-5413)', (done) => {
       const schema = new mongoose.Schema(
         {
           _id: String,
@@ -2501,7 +2502,7 @@ describe('model: update:', () => {
     });
 
     // FIXME: updateOne
-    it.skip('$pull with updateValidators and $in (gh-5744)', (done) => {
+    it('$pull with updateValidators and $in (gh-5744)', (done) => {
       const exampleSchema = mongoose.Schema({
         subdocuments: [
           {
@@ -2538,7 +2539,8 @@ describe('model: update:', () => {
       });
     });
 
-    it.skip('update with Decimal type (gh-5361)', (done) => {
+    it('update with Decimal type (gh-5361)', (done) => {
+      test()
       function test() {
         const schema = new mongoose.Schema({
           name: String,

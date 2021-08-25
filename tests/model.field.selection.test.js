@@ -319,7 +319,7 @@ describe('model field selection', () => {
       });
     });
 
-    it.skip('saves modified elemMatch paths (gh-1334)', (done) => {
+    it('saves modified elemMatch paths (gh-1334)', (done) => {
       const db = start();
 
       const postSchema = new Schema({

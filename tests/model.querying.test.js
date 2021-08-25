@@ -224,7 +224,7 @@ describe('model: querying:', () => {
     });
   });
 
-  describe.skip('distinct', () => {
+  describe('distinct', () => {
     it('executes when you pass a callback', (done) => {
       const db = start();
       let Address = new Schema({ zip: String });
@@ -456,8 +456,7 @@ describe('model: querying:', () => {
       );
     });
 
-    // FIXME: nedb matching does not support this yet
-    it.skip('works with nested docs and string ids (gh-389)', (done) => {
+    it('works with nested docs and string ids (gh-389)', (done) => {
       const BlogPostB = db.model('BlogPostB', collection);
 
       BlogPostB.create(
@@ -521,7 +520,7 @@ describe('model: querying:', () => {
       });
     });
 
-    it.skip('regex with Array (gh-599)', (done) => {
+    it('regex with Array (gh-599)', (done) => {
       const B = db.model('BlogPostB', random());
 
       B.create({ tags: 'wooof baaaark meeeeow'.split(' ') }, (err) => {
@@ -541,7 +540,7 @@ describe('model: querying:', () => {
       });
     });
 
-    it.skip('regex with options', (done) => {
+    it('regex with options', (done) => {
       const B = db.model('BlogPostB', collection);
 
       const post = new B({ title: '$option queries' });
@@ -1198,7 +1197,7 @@ describe('model: querying:', () => {
     });
 
     // FIXME:
-    it.skip('null matches null and undefined', (done) => {
+    it('null matches null and undefined', (done) => {
       const BlogPostB = db.model('BlogPostB', collection + random());
 
       BlogPostB.create({ title: 'A', author: null }, { title: 'B' }, (err) => {

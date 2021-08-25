@@ -12,7 +12,6 @@ const path = require('path');
 const mongoose = require('mongoose');
 const assert = require('power-assert'); // eslint-disable-line import/no-extraneous-dependencies
 
-mongoose.set('debug', true);
 mongoose.Promise = Promise;
 
 const { Collection } = mongoose;
