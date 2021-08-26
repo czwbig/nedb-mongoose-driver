@@ -1,24 +1,15 @@
-# @nedb/mongoose-driver
+# nedb-mongoose-driver
 
 A Mongoose driver for NeDB, most APIs are compatible.
 
 ## Limitations
 
-- Operators
-  - `$pushAll`, already removed in latest mongoose and mongodb
-  - `$isolated`
-- Indexes
-  - `2dsphere`
-- API
-  - `update`: can not return `affected` just as mongodb does, https://github.com/louischatriot/nedb#updating-documents
-  - `findOneAndUpdate`
-  - `findAndRemove`
-  - `findAndModify`
+todo
 
 ## Installation
 
 ```shell
-npm install @nedb/mongoose-driver @nedb/core mongoose@4.13.21 --save
+npm install nedb-mongoose-driver mongoose@4.13.21 --save
 ```
 
 ## Usage
@@ -26,7 +17,7 @@ npm install @nedb/mongoose-driver @nedb/core mongoose@4.13.21 --save
 ### 1. Setup
 
 ```javascript
-require('@nedb/mongoose-driver').install();
+require('nedb-mongoose-driver').install();
 
 const os = require('os');
 const fs = require('fs');
