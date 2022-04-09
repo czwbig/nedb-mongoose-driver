@@ -67,7 +67,10 @@ module.exports = function (options = {}) {
   const noErrorListener = !!options.noErrorListener;
   delete options.noErrorListener;
 
-  const conn = mongoose.createConnection(uri, Object.assign({ dbPath }, options));
+  const conn = /* TODO: JSFIX could not patch the breaking change:
+  BREAKING CHANGE: mongoose.connect() returns a promise, removed MongooseThenable #5796 
+  Suggested fix: Only relevant if you depend on the return value being a reference to the mongoose object. In that case, you need to modify the usages of the return value to get the mongoose object from somewhere else. */
+  mongoose.createConnection(uri, Object.assign({ dbPath }, options));
 
   if (noErrorListener) {
     return conn;

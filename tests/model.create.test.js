@@ -135,6 +135,9 @@ describe('model', () => {
           done();
         }, 100);
       });
+      /* TODO: JSFIX could not patch the breaking change:
+      Post hooks now get flow control, which means async post save hooks and child document post save hooks execute before your save() callback. 
+      Suggested fix: The post hook will now execute after (rather than before) the operation it hooks. In many cases this change is harmless, but you may want to ensure that the hook is not dependent on the hooked operation not having taken place.  */
       SchemaWithPreSaveHook.post('save', () => {
         countPost++;
       });
