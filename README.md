@@ -1,6 +1,10 @@
 # nedb-mongoose-driver
 
 A Mongoose driver for NeDB, most APIs are compatible.
+Fork From https://github.com/aerys/mongoose-nedb
+
+The package in NPM: https://www.npmjs.com/package/nedb-mongoose-driver  
+`npm i nedb-mongoose-driver` 
 
 ## Limitations
 
